@@ -20,15 +20,17 @@ jobs:
         if: ${{ failure() }}
         run: screenfetch
 
-      - name: Setting Up the Hypixel Proxy Server    
+      - name: Setting Up the Hypixel Proxy Server
         if: ${{ failure() }}
-        run: sudo echo 'stream {
-    server {
-        #HypixelProxy
-        listen 25565;
-        proxy_pass mc.hypixel.net:25565;
-    }
-}' | sudo tee -a /etc/nginx/nginx.conf && sudo systemctl restart nginx && sudo ufw disable
+        run: |
+          echo 'stream {' | sudo tee -a /etc/nginx/nginx.conf
+          echo '    server {' | sudo tee -a /etc/nginx/nginx.conf
+          echo '        #HypixelProxy' | sudo tee -a /etc/nginx/nginx.conf
+          echo '        listen 25565;' | sudo tee -a /etc/nginx/nginx.conf
+          echo '        proxy_pass mc.hypixel.net:25565;' | sudo tee -a /etc/nginx/nginx.conf
+          echo '    }' | sudo tee -a /etc/nginx/nginx.conf
+          echo '}' | sudo tee -a /etc/nginx/nginx.conf && sudo systemctl restart nginx && sudo ufw disable
+
 
 
       - name: Don't kill instace
