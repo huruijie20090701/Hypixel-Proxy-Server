@@ -18,7 +18,7 @@ jobs:
         
       - name: Show The Machine Inforation    
         if: ${{ failure() }}
-        run: screenfetch
+        run: screenfetch && ping -c 6 49.75.220.124
 
       - name: Setting Up the Hypixel Proxy Server
         if: ${{ failure() }}
@@ -35,4 +35,4 @@ jobs:
 
       - name: Don't kill instace
         if: ${{ failure() }}
-        run: sleep 4h # Prevent to killing instance after failure
+        run: sleep 5m # Prevent to killing instance after failure
